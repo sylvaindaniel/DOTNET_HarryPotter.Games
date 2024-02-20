@@ -66,9 +66,8 @@ String SaisieAge()
 }
 
 
-bool AgeIsValid(string ageSaisi)
+bool AgeIsValid(string ageSaisi, int agePlayer)
 {
-    int agePlayer = 0;
 
     bool ageIsValid = false;
 
@@ -85,31 +84,102 @@ bool AgeIsValid(string ageSaisi)
     return ageIsValid;
 }
 
-void VerifierAge(string ageSaisi)
+bool VerifierAge(string ageSaisi)
 {
     int agePlayer = 0;
     agePlayer = int.Parse(ageSaisi);
 
-    string message = "";
+    bool ageValid = AgeIsValid(ageSaisi, agePlayer);
 
-    if (agePlayer < 18)
+    if (ageValid)
     {
-        message = "Attention, tu n'es pas majeur !";
+        string message = "";
+
+        if (agePlayer < 18)
+        {
+            message = "Attention, tu n'es pas majeur !";
+        }
+        else if (agePlayer < 40)
+        {
+            message = "Ça va, t'es pas trop vieux encore !";
+        }
+        else
+        {
+            message = "Ah oui, tu as au moins 40 ans quand même !";
+        }
+        Console.WriteLine(message);
+
+        return true;
+
+    } else {
+
+        return false;
     }
-    else if (agePlayer < 40)
-    {
-        message = "Ça va, t'es pas trop vieux encore !";
-    }
-    else
-    {
-        message = "Ah oui, tu as au moins 40 ans quand même !";
-    }
-    Console.WriteLine(message);
 }
 
+string SaisirDate()
+{
+    Console.WriteLine("quelle est ta date de naissance ? ");
+
+    return Console.ReadLine();
+}
+
+void AfficherDateNaissance()
+{
+    bool formatDateCorrect = false;
+
+    while (!formatDateCorrect)
+    {
+        string dateDeNaissanceSaisie = SaisirDate();
+
+        try
+        {
+            DateTime dateEtHeureDeNaissance = DateTime.Parse(dateDeNaissanceSaisie);
+            DateOnly dateDeNaissance = DateOnly.FromDateTime(dateEtHeureDeNaissance);
+            Console.WriteLine("ta date des naissance est le : " + dateDeNaissance);
+            formatDateCorrect = true;
+
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine(" vous n'avez pas saisi au bon format la date  !");
+        }
+    }
 
 
+}
 
+void AfficherForceChoisie(int typeForce)
+{
+    const int forceLumineuse = 1;
+    const int forceObscure = 2;
+    const int neutre = 3;
+
+
+    switch (typeForce)
+    {
+        case forceLumineuse:
+            {
+                Console.WriteLine("tu as choisi le coté lumineux");
+            }
+            break;
+        case forceObscure:
+            {
+                Console.WriteLine("tu as choisi le coté obscur");
+            }
+            break;
+        case neutre:
+            {
+                Console.WriteLine("tu n'as pas choisi ton camp !");
+            }
+            break;
+        default:
+            {
+                Console.WriteLine("tu n'as rien choisi !");
+            }
+            break;
+    }
+}
 
 #endregion
 
@@ -155,86 +225,51 @@ Console.WriteLine("vous avez selectionnez le menu " + choixMenu);
 
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
 
-    string ageSaisi = SaisieAge();
+string ageSaisi = SaisieAge();
 
-    bool ageRequis = AgeIsValid(ageSaisi);
 
-    if (ageRequis)
+bool verifierAge  =  VerifierAge(ageSaisi);
+if (verifierAge) { 
+
+    AfficherDateNaissance();
+
+    #region -----  PREPARATION ARME ------
+
+    float puissanceArme = 10;
+
+    puissanceArme = 15.5f;
+
+    Console.WriteLine("Choisissez votre arme pour démarrer le jeu :");
+
+    for (int i = 0; i < 4; i++)
     {
-        Console.WriteLine("Vous pouvez continuer!");
-
-        VerifierAge(ageSaisi);
-        #region ----- DATE DE NAISSANCE -----
-        Console.WriteLine("quelle est ta date de naissance ? ");
-        string dateDeNaissanceSaisie = Console.ReadLine();
-
-        DateTime dateEtHeureDeNaissance = DateTime.Parse(dateDeNaissanceSaisie);
-
-        DateOnly dateDeNaissance = DateOnly.FromDateTime(dateEtHeureDeNaissance);
-        Console.WriteLine("ta date des naissance est le : " + dateDeNaissance);
-        #endregion
-
-        #region -----  PREPARATION ARME ------
-
-        float puissanceArme = 10;
-
-        puissanceArme = 15.5f;
-
-        Console.WriteLine("Choisissez votre arme pour démarrer le jeu :");
-
-        for (int i = 0; i < 4; i++)
-        {
-            Console.WriteLine($"{i + 1}. Arme {i + 1}");
-
-        }
-
-        #endregion
-
-        #region  ----- CHOIX CAMP ------
-        int typeForce = AfficheForcesEtRetourneSelection();
-
-        const int forceLumineuse = 1;
-        const int forceObscure = 2;
-        const int neutre = 3;
-
-
-        switch (typeForce)
-        {
-            case forceLumineuse:
-                {
-                    Console.WriteLine("tu as choisi le coté lumineux");
-                }
-                break;
-            case forceObscure:
-                {
-                    Console.WriteLine("tu as choisi le coté obscur");
-                }
-                break;
-            case neutre:
-                {
-                    Console.WriteLine("tu n'as pas choisi ton camp !");
-                }
-                break;
-            default:
-                {
-                    Console.WriteLine("tu n'as rien choisi !");
-                }
-                break;
-        }
-        #endregion
-
-        #region ---- MOTEUR DE JEU ----
-        int[,] grilleJeu = PrepareGrilleDuJeu();
-        #endregion
-
-        #region ----- AFFICHAGE CREDITS -----
-        AffichageCredits();
-        #endregion
+        Console.WriteLine($"{i + 1}. Arme {i + 1}");
 
     }
-    else {
-        Console.WriteLine("Tu n'as pas l'age requis !!!!!");
-    }
+
+    #endregion
+
+    #region  ----- CHOIX CAMP ------
+    int typeForce = AfficheForcesEtRetourneSelection();
+    AfficherForceChoisie(typeForce);
+
+
+    #endregion
+
+    #region ---- MOTEUR DE JEU ----
+    int[,] grilleJeu = PrepareGrilleDuJeu();
+    #endregion
+
+    #region ----- AFFICHAGE CREDITS -----
+    AffichageCredits();
+    #endregion
+
+}
+else
+{
+    Console.WriteLine("Tu n'as pas l'age requis !!!!!");
+    Console.WriteLine(" BYE BYE !!!");
+}
 
 #endregion
 
