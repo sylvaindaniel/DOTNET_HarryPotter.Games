@@ -181,13 +181,58 @@ void AfficherForceChoisie(int typeForce)
     }
 }
 
+string ChoisirArmeEtRetourneSelection()
+{
+    float puissanceArme = 10;
+    puissanceArme = 15.5f;
+
+    while (true)
+    {
+        Console.WriteLine("Choisissez votre arme pour démarrer le jeu :");
+
+        string[] tabArme = {"baguette", "couteau", "flingue", "bombe nucléaire"};
+ 
+
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"{i + 1}.  {tabArme[i]}");
+
+        }
+        try
+        {
+            string saisieArme = Console.ReadLine();
+            int typeArme = int.Parse(saisieArme) - 1;
+            return tabArme[typeArme];
+        }
+        catch (IndexOutOfRangeException)
+        {
+            Console.WriteLine("tu as saisi une arme qui n'existe pas !!!");
+            Console.WriteLine("");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Tu dois entrer un nombre !");
+            Console.WriteLine("");
+
+        }
+    }
+
+    return null;
+
+}
+
+void AfficherArmeChoisie(string arme)
+{
+
+    const string message = "Vous avez choisi un(e) ";
+
+    Console.WriteLine(message + arme);
+}
+
 #endregion
 
 #region MENU
 // ------------------  MENU -----------------
-
-
-
 
 Console.WriteLine("********");
 Console.WriteLine("* MENU *");
@@ -226,34 +271,20 @@ Console.WriteLine("vous avez selectionnez le menu " + choixMenu);
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
 
 string ageSaisi = SaisieAge();
-
-
 bool verifierAge  =  VerifierAge(ageSaisi);
+
 if (verifierAge) { 
 
     AfficherDateNaissance();
 
     #region -----  PREPARATION ARME ------
-
-    float puissanceArme = 10;
-
-    puissanceArme = 15.5f;
-
-    Console.WriteLine("Choisissez votre arme pour démarrer le jeu :");
-
-    for (int i = 0; i < 4; i++)
-    {
-        Console.WriteLine($"{i + 1}. Arme {i + 1}");
-
-    }
-
+    string arme = ChoisirArmeEtRetourneSelection();
+    AfficherArmeChoisie(arme);
     #endregion
 
     #region  ----- CHOIX CAMP ------
     int typeForce = AfficheForcesEtRetourneSelection();
     AfficherForceChoisie(typeForce);
-
-
     #endregion
 
     #region ---- MOTEUR DE JEU ----
