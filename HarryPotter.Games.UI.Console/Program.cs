@@ -17,22 +17,6 @@ void AffichageCredits()
 
 }
 
-void AfficherForce()
-{
-    Console.WriteLine("De quel coté de la force seras tu ?");
-    Console.WriteLine("1. Du coté lumineux");
-    Console.WriteLine("2. Du coté obscur");
-    Console.WriteLine("3. Neutre");
-}
-
-int AfficheForcesEtRetourneSelection()
-{
-    AfficherForce();
-    string saisieForce = Console.ReadLine();
-    int typeForce = int.Parse(saisieForce);
-
-    return typeForce;
-}
 
 int[,] PrepareGrilleDuJeu()
 {
@@ -149,6 +133,46 @@ void AfficherDateNaissance()
 
 }
 
+void AfficherForce()
+{
+    Console.WriteLine("De quel coté de la force seras tu ?");
+    Console.WriteLine("1. Du coté lumineux");
+    Console.WriteLine("2. Du coté obscur");
+    Console.WriteLine("3. Neutre");
+}
+
+int AfficheForcesEtRetourneSelection()
+{
+    int typeForce = 0;
+    string messageError = @"
+        ************************************
+        * vous devez saisir entre 1 et 3 ! *
+        ************************************" ;
+
+    while (true)
+    {
+        AfficherForce();
+        try
+        {
+            string saisieForce = Console.ReadLine();
+
+            typeForce = int.Parse(saisieForce);
+            if ((typeForce > 0) && (typeForce < 4))
+            {
+                return typeForce;
+            }
+            else
+            {
+                Console.WriteLine(messageError);
+            }
+        } catch (FormatException)
+        {
+            Console.WriteLine(messageError);
+        }
+    }
+    
+}
+
 void AfficherForceChoisie(int typeForce)
 {
     const int forceLumineuse = 1;
@@ -213,7 +237,6 @@ string ChoisirArmeEtRetourneSelection()
         {
             Console.WriteLine("Tu dois entrer un nombre !");
             Console.WriteLine("");
-
         }
     }
 
