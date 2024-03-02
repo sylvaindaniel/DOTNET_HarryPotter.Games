@@ -1,13 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.ComponentModel;
 using System.Diagnostics;
+using HarryPotter.Games.UI.Console;
+
 
 string titre = "Harry Potter Game";
 
 Debug.WriteLine("==> Je teste " + titre);
 
 #region Framework du projet
-//Affiche les crédits sur la console
+
+#region CONSTANTES
+const int AGE_MINIMUM = 12;
+#endregion CONSTANTES
 void AffichageCredits()
 {
     Console.WriteLine("************");
@@ -34,44 +39,10 @@ void AfficherItemMenu(string itemMenu, int indexMenu = 1)
 }
 
 
-String SaisieAge()
+bool DemanderEtVerifierAge()
 {
-    bool ageSaisiPasValide = true;
-    string ageSaisi = "";
-
-    do
-    {
-        Console.WriteLine("Quel est ton âge ?");
-        ageSaisi = Console.ReadLine();
-        ageSaisiPasValide = string.IsNullOrWhiteSpace(ageSaisi);
-
-    } while (ageSaisiPasValide);
-    return ageSaisi;
-}
-
-
-bool AgeIsValid(string ageSaisi, int agePlayer)
-{
-
-    bool ageIsValid = false;
-
-    agePlayer = int.Parse(ageSaisi);
-
-    int ageMinimum = 12;
-
-    int comparaison = agePlayer.CompareTo(ageMinimum);
-
-    //Console.WriteLine(comparaison);
-
-    ageIsValid = comparaison >= 0;
-
-    return ageIsValid;
-}
-
-bool VerifierAge(string ageSaisi)
-{
-    int agePlayer = 0;
-    agePlayer = int.Parse(ageSaisi);
+    string ageSaisi = SaisieAge();
+    int.TryParse(ageSaisi, out int agePlayer);
 
     bool ageValid = AgeIsValid(ageSaisi, agePlayer);
 
@@ -89,8 +60,9 @@ bool VerifierAge(string ageSaisi)
         }
         else
         {
-            message = "Ah oui, tu as au moins 40 ans quand même !";
+            message = "Ah oui, plus de 40 !!! c'est le début de la fin la !!";
         }
+        Console.WriteLine(agePlayer + " ans !!!");
         Console.WriteLine(message);
 
         return true;
@@ -101,6 +73,33 @@ bool VerifierAge(string ageSaisi)
     }
 }
 
+string SaisieAge()
+{
+    bool ageSaisiPasValide = true;
+    string ageSaisi = "";
+
+    do
+    {
+        Console.WriteLine("Quel est ton âge ?");
+        ageSaisi = Console.ReadLine();
+        ageSaisiPasValide = string.IsNullOrWhiteSpace(ageSaisi);
+
+    } while (ageSaisiPasValide);
+    return ageSaisi;
+}
+bool AgeIsValid(string ageSaisi, int agePlayer)
+{
+
+    bool ageIsValid = false;
+
+    int.TryParse(ageSaisi, out agePlayer);
+
+    int comparaison = agePlayer.CompareTo(AGE_MINIMUM);
+
+    ageIsValid = comparaison >= 0;
+
+    return ageIsValid;
+}
 string SaisirDate()
 {
     Console.WriteLine("quelle est ta date de naissance ? ");
@@ -108,11 +107,10 @@ string SaisirDate()
     return Console.ReadLine();
 }
 
-void AfficherDateNaissance()
+DateOnly AfficherDateNaissance()
 {
-    bool formatDateCorrect = false;
 
-    while (!formatDateCorrect)
+    while (true)
     {
         string dateDeNaissanceSaisie = SaisirDate();
 
@@ -121,7 +119,7 @@ void AfficherDateNaissance()
             DateTime dateEtHeureDeNaissance = DateTime.Parse(dateDeNaissanceSaisie);
             DateOnly dateDeNaissance = DateOnly.FromDateTime(dateEtHeureDeNaissance);
             Console.WriteLine("ta date des naissance est le : " + dateDeNaissance);
-            formatDateCorrect = true;
+            return dateDeNaissance;
 
         }
         catch (FormatException)
@@ -255,12 +253,23 @@ void AfficherArmeChoisie(string arme)
 #endregion
 
 #region MENU
-// ------------------  MENU -----------------
+void AfficherMenu()
+{
+    Console.WriteLine("********");
+    Console.WriteLine("* MENU *");
+    Console.WriteLine("********");
+    Console.WriteLine("");
+    AfficherItemMenu("Nouvelle Partie");
+    AfficherItemMenu("Charger une Partie", 2);
+    AfficherItemMenu("Crédits", 3);
+    AfficherItemMenu("Quitter", 4);
 
-Console.WriteLine("********");
-Console.WriteLine("* MENU *");
-Console.WriteLine("********");
-Console.WriteLine("");
+    string choixMenuSaisi = Console.ReadLine();
+
+    int choixMenu = int.Parse(choixMenuSaisi);
+
+    Console.WriteLine("vous avez selectionnez le menu " + choixMenu);
+}
 AffichageCredits();
 ////chaine complete
 //string itemMenu = "nouvelle partie";
@@ -276,29 +285,25 @@ AffichageCredits();
 //Console.WriteLine($"{3}. {itemMenu.Substring(0, 1).ToUpper() + itemMenu.Substring(1).ToLower()}");
 
 
-AfficherItemMenu("Nouvelle Partie");
-AfficherItemMenu("Charger une Partie", 2);
-AfficherItemMenu("Crédits", 3);
-AfficherItemMenu("Quitter", 4);
+AfficherMenu();
 
 
 
-string choixMenuSaisi = Console.ReadLine();
-
-int choixMenu = int.Parse(choixMenuSaisi);
-
-Console.WriteLine("vous avez selectionnez le menu " + choixMenu);
 
 #endregion
 
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
+Player joueur1 = new Player("toto");
 
-string ageSaisi = SaisieAge();
-bool verifierAge  =  VerifierAge(ageSaisi);
+
+bool verifierAge  =  DemanderEtVerifierAge();
 
 if (verifierAge) { 
 
-    AfficherDateNaissance();
+    DateOnly dateDeNaissance = AfficherDateNaissance();
+    joueur1.DateDeNaissance=dateDeNaissance;
+
+    Console.WriteLine("caracteristique joueur 1: " + joueur1);
 
     #region -----  PREPARATION ARME ------
     string arme = ChoisirArmeEtRetourneSelection();
@@ -311,7 +316,14 @@ if (verifierAge) {
     #endregion
 
     #region ---- MOTEUR DE JEU ----
-    int[,] grilleJeu = PrepareGrilleDuJeu();
+    void InitDonneesJeu()
+    {
+        int[,] grilleJeu = PrepareGrilleDuJeu();
+
+    }
+
+
+  
     #endregion
 
     #region ----- AFFICHAGE CREDITS -----
