@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarryPotter.Games.UI.Console", "HarryPotter.Games.UI.Console\HarryPotter.Games.UI.Console.csproj", "{E50698E0-1990-4EEB-AC59-7C96E08FCFFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarryPotter.Games.UI.Console", "HarryPotter.Games.UI.Console\HarryPotter.Games.UI.Console.csproj", "{E50698E0-1990-4EEB-AC59-7C96E08FCFFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarryPotter.Games.UI.Console2", "HarryPotter.Games.UI.Console2\HarryPotter.Games.UI.Console2.csproj", "{8EFE0B0D-817A-48FA-8098-609A74EBADB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{673A47B5-9E24-4BCA-BD39-33C97248D21B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{5CCDCD4A-560E-4D9F-B04F-CFC039C3F8C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarryPotter.Game.Core", "HarryPotter.Game.Core\HarryPotter.Game.Core.csproj", "{E2842BB0-803E-4989-991D-D88483539A7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,21 @@ Global
 		{E50698E0-1990-4EEB-AC59-7C96E08FCFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E50698E0-1990-4EEB-AC59-7C96E08FCFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E50698E0-1990-4EEB-AC59-7C96E08FCFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFE0B0D-817A-48FA-8098-609A74EBADB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFE0B0D-817A-48FA-8098-609A74EBADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFE0B0D-817A-48FA-8098-609A74EBADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFE0B0D-817A-48FA-8098-609A74EBADB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2842BB0-803E-4989-991D-D88483539A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2842BB0-803E-4989-991D-D88483539A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2842BB0-803E-4989-991D-D88483539A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2842BB0-803E-4989-991D-D88483539A7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8EFE0B0D-817A-48FA-8098-609A74EBADB2} = {5CCDCD4A-560E-4D9F-B04F-CFC039C3F8C9}
+		{E2842BB0-803E-4989-991D-D88483539A7C} = {673A47B5-9E24-4BCA-BD39-33C97248D21B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A982CD90-D4E1-4F62-BD45-FBEA004E7C2F}

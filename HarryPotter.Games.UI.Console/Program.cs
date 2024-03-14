@@ -1,9 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.ComponentModel;
-using System.Diagnostics;
-using HarryPotter.Games.UI.Console;
-
-
 string titre = "Harry Potter Game";
 
 Debug.WriteLine("==> Je teste " + titre);
@@ -294,6 +289,7 @@ AfficherMenu();
 
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
 Player joueur1 = new Player("toto");
+Ennemi mechant1 = new Ennemi("pabo", 10,100);
 
 
 bool verifierAge  =  DemanderEtVerifierAge();
@@ -304,6 +300,8 @@ if (verifierAge) {
     joueur1.DateDeNaissance=dateDeNaissance;
 
     Console.WriteLine("caracteristique joueur 1: " + joueur1);
+    Console.WriteLine("caracteristique de l'ennemi : " + mechant1);
+
 
     #region -----  PREPARATION ARME ------
     string arme = ChoisirArmeEtRetourneSelection();
@@ -336,6 +334,14 @@ else
     Console.WriteLine("Tu n'as pas l'age requis !!!!!");
     Console.WriteLine(" BYE BYE !!!");
 }
+
+#endregion
+
+#region LANCEMENT DU JEU
+joueur1.SeDeplacer();
+joueur1.Attaquer(mechant1);
+mechant1.SeDeplacer();
+mechant1.Attaquer(joueur1);
 
 #endregion
 
