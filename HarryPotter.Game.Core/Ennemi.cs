@@ -6,24 +6,13 @@ using System.Threading.Tasks;
 
 namespace HarryPotter.Game.Core
 {
-    public class Ennemi
+    public class Ennemi:Character
     {
         #region constante
         const int DEFAUT_POINT_DE_VIE = 100;
         #endregion
-        #region method public
-        public void SeDeplacer()
-        {
-            System.Console.WriteLine($"{this.Name} l'ennemi se déplace");
-        }
-
-        public void Attaquer(Player player)
-        {
-            System.Console.WriteLine("l'ennemi attaque le joueur " + player.Pseudo);
-        }
-        #endregion  method public
+ 
         #region property
-        public string Name { get; set; }
         public int Force { get; set; }
         public int PointDeVie { get; set; } = DEFAUT_POINT_DE_VIE;
         public Ennemi() { }
@@ -48,6 +37,15 @@ namespace HarryPotter.Game.Core
            return $"Name: {Name}, Force: {Force}";
         }
         #endregion property
+
+        #region Method public
+        public override void SeDeplacer()
+        {
+            base.SeDeplacer();
+            Console.WriteLine($"{this.Name} Je saute de bond en bond !! bouing bouing bouing !!!!");
+
+        }
+        #endregion
 
     }
 }
