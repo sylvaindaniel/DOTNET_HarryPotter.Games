@@ -1,4 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using static HarryPotter.Game.Core.Force;
+
 string titre = "Harry Potter Game";
 
 Debug.WriteLine("==> Je teste " + titre);
@@ -166,36 +168,36 @@ int AfficheForcesEtRetourneSelection()
     
 }
 
-void AfficherForceChoisie(int typeForce)
+Force AfficherForceChoisie(int typeForce)
 {
-    const int forceLumineuse = 1;
-    const int forceObscure = 2;
-    const int neutre = 3;
 
+    Force forceChoisie;
 
     switch (typeForce)
     {
-        case forceLumineuse:
+        case 1:
             {
-                Console.WriteLine("tu as choisi le coté lumineux");
+                forceChoisie = new Force(ForceType.Lumineux);
             }
             break;
-        case forceObscure:
+        case 2:
             {
-                Console.WriteLine("tu as choisi le coté obscur");
+                forceChoisie = new Force(ForceType.Obscur);
             }
             break;
-        case neutre:
+        case 3:
             {
-                Console.WriteLine("tu n'as pas choisi ton camp !");
+                forceChoisie = new Force(ForceType.Neutre);
             }
             break;
         default:
             {
-                Console.WriteLine("tu n'as rien choisi !");
+                forceChoisie = new Force();
             }
             break;
     }
+    Console.WriteLine($"tu as choisi le coté {forceChoisie.Type} de la force");
+    return forceChoisie;
 }
 
 string ChoisirArmeEtRetourneSelection()
@@ -289,7 +291,7 @@ AfficherMenu();
 
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
 Player joueur1 = new Player("toto");
-Ennemi mechant1 = new Ennemi("pabo", 10,100);
+Ennemi mechant1 = new Ennemi("pabo", 10, 100);
 
 
 bool verifierAge  =  DemanderEtVerifierAge();
@@ -310,7 +312,9 @@ if (verifierAge) {
 
     #region  ----- CHOIX CAMP ------
     int typeForce = AfficheForcesEtRetourneSelection();
-    AfficherForceChoisie(typeForce);
+    //AfficherForceChoisie(typeForce);
+    joueur1.Force = AfficherForceChoisie(typeForce);
+    Console.WriteLine(joueur1);
     #endregion
 
     #region ---- MOTEUR DE JEU ----
@@ -339,6 +343,7 @@ else
 
 #region LANCEMENT DU JEU
 joueur1.SeDeplacer();
+joueur1.SeDeplacer(new Position(){ X = 1,Y = 1});
 joueur1.Attaquer(mechant1);
 mechant1.SeDeplacer();
 mechant1.Attaquer(joueur1);

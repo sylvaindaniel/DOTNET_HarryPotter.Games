@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static HarryPotter.Game.Core.Force;
 
 namespace HarryPotter.Game.Core
 {
@@ -14,10 +15,33 @@ namespace HarryPotter.Game.Core
         #region constante
         const int DEFAUT_POINT_DE_VIE = 100;
         #endregion
-        
+
+        #region constructor
+        public Player(string name, string pseudo, DateOnly dateDeNaissance, Force force) : base(name)
+        {
+            this.Pseudo = pseudo;
+            this.DateDeNaissance = dateDeNaissance;
+            this.Force = force;
+        }
+        public Player() : this(string.Empty,string.Empty,DateOnly.MinValue, new Force(ForceType.Neutre))
+        {            
+        }
+        public Player(string name) : this(name, string.Empty, DateOnly.MinValue, new Force(ForceType.Neutre))
+        {
+        }
+        public Player(string name, string pseudo) : this(name, pseudo, DateOnly.MinValue, new Force(ForceType.Neutre))
+        {
+        }
+        public Player(string pseudo, DateOnly dateDeNaissance) : this(string.Empty, pseudo, dateDeNaissance, new Force(ForceType.Neutre))
+        {
+        }
+        #endregion
+
         #region properties
         public string Pseudo { get; set; } = "yoda";   //ajoute en plus une valeur par défaut
         public int PointDeVie { get; set; } = DEFAUT_POINT_DE_VIE;
+
+        public Force Force { get; set; }
 
         private DateOnly dateDeNaissance;  //si l'on utilise pas les propriétés dynamiques ci-dessus
 
@@ -32,31 +56,11 @@ namespace HarryPotter.Game.Core
             }
         }
 
-        public Player() { }
-        public Player(string name, string pseudo, DateOnly dateDeNaissance)
-        {
-            this.Name = name;
-            this.Pseudo = pseudo;
-            this.DateDeNaissance = dateDeNaissance;
-        }
-        public Player(string name)
-        {
-            this.Name = name;
-        }
-        public Player(string pseudo, string name)
-        {
-            this.Pseudo = pseudo;
-            this.Name = name;
-        }
-        public Player(string pseudo, DateOnly dateDeNaissance)
-        {
-            this.Pseudo = pseudo;
-            this.DateDeNaissance= dateDeNaissance;
-        }
 
         public override string ToString()
         {
-            return $"Name: {Name}, Pseudo: {Pseudo}, Date de naissance: {dateDeNaissance}";
+            string forceMessage = (Force == null || Force.Type == ForceType.Neutre) ? "tu n'as pas encore choisi ton camp !" : $"tu as choisie le côté {Force.Type} de la force";
+            return $"Name: {Name}, Pseudo: {Pseudo}, Date de naissance: {dateDeNaissance}, {forceMessage}";
         }
         #endregion properties
 
@@ -67,6 +71,7 @@ namespace HarryPotter.Game.Core
             Console.WriteLine($"{this.Name} Cours Forrest !!!!");
 
         }
+
         #endregion
     }
 }

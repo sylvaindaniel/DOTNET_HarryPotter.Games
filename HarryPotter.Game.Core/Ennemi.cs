@@ -15,23 +15,25 @@ namespace HarryPotter.Game.Core
         #region property
         public int Force { get; set; }
         public int PointDeVie { get; set; } = DEFAUT_POINT_DE_VIE;
-        public Ennemi() { }
 
-        public Ennemi(string name) {
-            this.Name = name; 
-        }
-
-        public Ennemi(int force) { 
-            this.Force = force;
-        }
-
-        public Ennemi(string name, int force, int pointDeVie)
+        #region constructor
+        public Ennemi(string name, int force, int pointDeVie) : base(name) 
         {
-            this.Name = name;
             this.Force = force;
             this.PointDeVie = pointDeVie;
         }
+        public Ennemi() : this(string.Empty,default,default) 
+        {
+        }
+        public Ennemi(string name) : this(name,default,default)
+        {
+        }
 
+        public Ennemi(int force) :this(string.Empty,default,default)
+        { 
+        }
+
+        #endregion
         public override string ToString()
         {
            return $"Name: {Name}, Force: {Force}";
