@@ -69,7 +69,6 @@ namespace HarryPotter.Game.Core
         {
             base.SeDeplacer();
             Console.WriteLine($"{this.Name} Cours Forrest !!!!");
-
         }
 
         #endregion
