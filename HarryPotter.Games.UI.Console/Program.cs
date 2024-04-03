@@ -7,9 +7,16 @@ Debug.WriteLine("==> Je teste " + titre);
 
 #region Framework du projet
 
-#region CONSTANTES
+#region CONSTANTES et variables globales
 const int AGE_MINIMUM = 12;
+Menu menu = new Menu();
+menu.Add(1, "Nouvelle partie");
+menu.Add(2, "Charger partie");
+menu.Add(3, "Crédit");
+menu.Add(4, "Quitter");
 #endregion CONSTANTES
+
+
 void AffichageCredits()
 {
     Console.WriteLine("************");
@@ -256,10 +263,19 @@ void AfficherMenu()
     Console.WriteLine("* MENU *");
     Console.WriteLine("********");
     Console.WriteLine("");
-    AfficherItemMenu("Nouvelle Partie");
-    AfficherItemMenu("Charger une Partie", 2);
-    AfficherItemMenu("Crédits", 3);
-    AfficherItemMenu("Quitter", 4);
+
+
+    AfficherInformation methodeAExecuter = AfficherEnBleu;
+
+    menu.Afficher(methodeAExecuter);
+
+    void AfficherEnBleu(object value)
+    {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(value);
+        Console.ForegroundColor = ConsoleColor.White;
+
+    }
 
     string choixMenuSaisi = Console.ReadLine();
 
@@ -290,8 +306,8 @@ AfficherMenu();
 #endregion
 
 #region ----- SAISIE INFORMATION JOUEUR/JOUEUSE ----------
-Player joueur1 = new Player("toto");
-Ennemi mechant1 = new Ennemi("pabo", 10, 100);
+Player joueur1 = new Player("toto",Console.WriteLine);
+Ennemi mechant1 = new Ennemi("pabo", 10, 100,Console.WriteLine);
 
 
 bool verifierAge  =  DemanderEtVerifierAge();

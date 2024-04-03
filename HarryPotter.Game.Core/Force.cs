@@ -8,16 +8,6 @@ namespace HarryPotter.Game.Core
 {
     public class Force
     {
-
-        #region constructor
-        
-        public Force() { }
-        public Force(ForceType force) 
-        {
-            this.Type = force;        
-        }
-
-        #endregion
         public enum ForceType
         {
             Obscur,
@@ -29,6 +19,16 @@ namespace HarryPotter.Game.Core
         public ForceType Type { get; set; }
         #endregion
 
+        #region constructor
+
+        public Force() { }
+        public Force(ForceType force) 
+        {
+            this.Type = force;        
+        }
+
+        #endregion
+ 
         #region method
         public override string ToString()
         {

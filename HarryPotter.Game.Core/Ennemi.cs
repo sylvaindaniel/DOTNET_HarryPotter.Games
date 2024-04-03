@@ -17,19 +17,19 @@ namespace HarryPotter.Game.Core
         public int PointDeVie { get; set; } = DEFAUT_POINT_DE_VIE;
 
         #region constructor
-        public Ennemi(string name, int force, int pointDeVie) : base(name) 
+        public Ennemi(string name, int force, int pointDeVie,AfficherInformation afficher) : base(name,afficher) 
         {
             this.Force = force;
             this.PointDeVie = pointDeVie;
         }
-        public Ennemi() : this(string.Empty,default,default) 
+        public Ennemi(AfficherInformation afficher) : this(string.Empty,default,default,afficher) 
         {
         }
-        public Ennemi(string name) : this(name,default,default)
+        public Ennemi(string name, AfficherInformation afficher) : this(name,default,default, afficher)
         {
         }
 
-        public Ennemi(int force) :this(string.Empty,default,default)
+        public Ennemi(int force, AfficherInformation afficher) :this(string.Empty,default,default,afficher)
         { 
         }
 
@@ -44,7 +44,7 @@ namespace HarryPotter.Game.Core
         public override void SeDeplacer()
         {
             base.SeDeplacer();
-            Console.WriteLine($"{this.Name} Je saute de bond en bond !! bouing bouing bouing !!!!");
+            this.afficher($"{this.Name} Je saute de bond en bond !! bouing bouing bouing !!!!");
 
         }
         #endregion

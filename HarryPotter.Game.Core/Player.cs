@@ -16,27 +16,6 @@ namespace HarryPotter.Game.Core
         const int DEFAUT_POINT_DE_VIE = 100;
         #endregion
 
-        #region constructor
-        public Player(string name, string pseudo, DateOnly dateDeNaissance, Force force) : base(name)
-        {
-            this.Pseudo = pseudo;
-            this.DateDeNaissance = dateDeNaissance;
-            this.Force = force;
-        }
-        public Player() : this(string.Empty,string.Empty,DateOnly.MinValue, new Force(ForceType.Neutre))
-        {            
-        }
-        public Player(string name) : this(name, string.Empty, DateOnly.MinValue, new Force(ForceType.Neutre))
-        {
-        }
-        public Player(string name, string pseudo) : this(name, pseudo, DateOnly.MinValue, new Force(ForceType.Neutre))
-        {
-        }
-        public Player(string pseudo, DateOnly dateDeNaissance) : this(string.Empty, pseudo, dateDeNaissance, new Force(ForceType.Neutre))
-        {
-        }
-        #endregion
-
         #region properties
         public string Pseudo { get; set; } = "yoda";   //ajoute en plus une valeur par défaut
         public int PointDeVie { get; set; } = DEFAUT_POINT_DE_VIE;
@@ -45,10 +24,11 @@ namespace HarryPotter.Game.Core
 
         private DateOnly dateDeNaissance;  //si l'on utilise pas les propriétés dynamiques ci-dessus
 
-        public DateOnly DateDeNaissance { 
-            get 
-            { 
-                return this.dateDeNaissance; 
+        public DateOnly DateDeNaissance
+        {
+            get
+            {
+                return this.dateDeNaissance;
             }
             set
             {
@@ -64,11 +44,34 @@ namespace HarryPotter.Game.Core
         }
         #endregion properties
 
+        #region constructor
+        public Player(string name, string pseudo, DateOnly dateDeNaissance, Force force,AfficherInformation afficher) : base(name, afficher)
+        {
+            this.Pseudo = pseudo;
+            this.DateDeNaissance = dateDeNaissance;
+            this.Force = force;
+        }
+        public Player(AfficherInformation afficher) : this(string.Empty,string.Empty,DateOnly.MinValue, new Force(ForceType.Neutre),afficher)
+        {            
+        }
+        public Player(string name, AfficherInformation afficher) : this(name, string.Empty, DateOnly.MinValue, new Force(ForceType.Neutre),afficher)
+        {
+        }
+        public Player(string name, string pseudo,AfficherInformation afficher) : this(name, pseudo, DateOnly.MinValue, new Force(ForceType.Neutre), afficher)
+        {
+        }
+        public Player(string pseudo, DateOnly dateDeNaissance,AfficherInformation afficher) : this(string.Empty, pseudo, dateDeNaissance, new Force(ForceType.Neutre), afficher)
+        {
+        }
+        #endregion
+
+        
+
         #region Method public
         public override void SeDeplacer()
         {
             base.SeDeplacer();
-            Console.WriteLine($"{this.Name} Cours Forrest !!!!");
+            this.afficher($"{this.Name} Cours Forrest !!!!");
 
         }
 

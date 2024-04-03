@@ -16,24 +16,27 @@ namespace HarryPotter.Game.Core
         public string Name { get; set; }
         public Position CurrentPosition { get; set; } = new Position() { X=0 , Y=0};
 
+        protected readonly AfficherInformation afficher;
+
         #endregion property
 
         #region constructor
-        public Character()
+        public Character(AfficherInformation afficher) : this(string.Empty,afficher)
         {
-            this.Name = string.Empty;
         }
 
-        public Character(string prenom)
+        public Character(string prenom, AfficherInformation afficher)
         {
             this.Name= prenom;
+            this.afficher = afficher;
+
         }
         #endregion
 
         #region method public
         public virtual void SeDeplacer()
         {
-            Console.WriteLine($"{this.Name} je me déplace");
+            this.afficher($"{this.Name} je me déplace");
         }
 
         public void SeDeplacer( Position newPosition)
@@ -44,7 +47,7 @@ namespace HarryPotter.Game.Core
 
         public void Attaquer(Character enemy)
         {
-            Console.WriteLine("j'attaque {0} ", enemy.Name);
+            this.afficher($"j'attaque {enemy.Name} ");
         }
         #endregion
 
