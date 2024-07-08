@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HarryPotter.Games.core.Models;
+using HarryPotter.Games.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +39,11 @@ namespace HarryPotter.Game.Core
         public virtual void SeDeplacer()
         {
             this.afficher($"{this.Name} je me déplace");
+        }
+
+        public void SeDeplacer(ICalculateurPosition calculateurPosition)
+        {
+            this.CurrentPosition = calculateurPosition.Calculer();
         }
 
         public void SeDeplacer( Position newPosition)

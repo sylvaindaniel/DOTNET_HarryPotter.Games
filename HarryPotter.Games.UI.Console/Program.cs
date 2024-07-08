@@ -1,6 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using HarryPotter.Game.Core.DataLayers;
+using HarryPotter.Games.core.Models;
+using HarryPotter.Games.Core.Interfaces.DataLayers;
 using static HarryPotter.Game.Core.Force;
-
+#region Init
+//le @ permet de ne pas doubler les \ pour la protection des caractères
+IDataLayers dataLayer = new AccesFichierDataLayer(@"H:\TUTO ET FORMATION\GITHUB\ConfigHarryPotter\sauvegarde.txt");
+try
+{
+    dataLayer.Ecrire("coucou !");
+}
+catch (FileNotFoundException ex)
+{
+    Console.WriteLine("Fichier non présent !");
+}
+#endregion
 string titre = "Harry Potter Game";
 
 Debug.WriteLine("==> Je teste " + titre);
@@ -358,10 +372,11 @@ else
 #endregion
 
 #region LANCEMENT DU JEU
-joueur1.SeDeplacer();
-joueur1.SeDeplacer(new Position(){ X = 1,Y = 1});
+//joueur1.SeDeplacer();
+//joueur1.SeDeplacer(new Position(){ X = 1,Y = 1});
+joueur1.SeDeplacer(new RandomCalculateurPosition());
 joueur1.Attaquer(mechant1);
-mechant1.SeDeplacer();
+mechant1.SeDeplacer(new StaticCalculateurPosition(1,2));
 mechant1.Attaquer(joueur1);
 
 #endregion

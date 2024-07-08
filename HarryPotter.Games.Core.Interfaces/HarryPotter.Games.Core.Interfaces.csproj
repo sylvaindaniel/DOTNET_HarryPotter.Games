@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HarryPotter.Games.Core.Interfaces\HarryPotter.Games.Core.Interfaces.csproj" />
     <ProjectReference Include="..\HarryPotter.Games.core.Models\HarryPotter.Games.core.Models.csproj" />
   </ItemGroup>
 
