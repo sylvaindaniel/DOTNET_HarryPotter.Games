@@ -5,10 +5,16 @@ using HarryPotter.Games.Core.Interfaces.DataLayers;
 using static HarryPotter.Game.Core.Force;
 #region Init
 //le @ permet de ne pas doubler les \ pour la protection des caractères
-IDataLayers dataLayer = new AccesFichierDataLayer(@"H:\TUTO ET FORMATION\GITHUB\ConfigHarryPotter\sauvegarde.txt");
+IDataLayers<Menu> dataLayer = new SerializationDataLayer<Menu>(@"H:\TUTO ET FORMATION\GITHUB\ConfigHarryPotter\sauvegarde.xml");
 try
 {
-    dataLayer.Ecrire("coucou !");
+    var menuTest = new Menu();
+    menuTest.Add(new ItemMenu(1, "Test menu 1"));
+    menuTest.Add(new ItemMenu(2, "Test menu 2"));
+    dataLayer.Ecrire(menuTest);
+
+    // le @ permet d'utiliser des mots clés utilisés par c# comme variable
+    var @object = dataLayer.Lire(typeof(Menu));
 }
 catch (FileNotFoundException ex)
 {

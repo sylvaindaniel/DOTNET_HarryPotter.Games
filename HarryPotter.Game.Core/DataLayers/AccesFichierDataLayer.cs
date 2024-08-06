@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HarryPotter.Game.Core.DataLayers
 {
-    public class AccesFichierDataLayer : IDataLayers
+    public class AccesFichierDataLayer<T> : IDataLayers<T>  where T : class
     {
 
         #region Fields
@@ -15,26 +15,26 @@ namespace HarryPotter.Game.Core.DataLayers
         #endregion
 
         #region Constructors
-        public AccesFichierDataLayer(string chemniEnregistrement)
+        public AccesFichierDataLayer(string cheminEnregistrement)
         {
-            this.ChemniEnregistrement = chemniEnregistrement;
+            this.CheminEnregistrement = cheminEnregistrement;
         }
         #endregion
 
         #region Public methods
 
-        public void Ecrire(object item)
+        public void Ecrire(T item)
         {
-            if (!File.Exists(ChemniEnregistrement))
+            if (!File.Exists(CheminEnregistrement))
             {
-                var streamWriter = File.CreateText(this.ChemniEnregistrement);
+                var streamWriter = File.CreateText(this.CheminEnregistrement);
                 streamWriter.Close();
             }
             else
             {
                 //ce n'est pas le meme using que dans l'entete de la classe
                 //celui la permet d'utiliser proprement les dispose des classes qui en ont. des qu'il y a un dispose on peut utiliser le using
-                using FileStream fileStream = File.Open(this.ChemniEnregistrement, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                using FileStream fileStream = File.Open(this.CheminEnregistrement, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 try
                 {
                     byte[] buffer = System.Text.Encoding.UTF8.GetBytes(item.ToString());
@@ -50,12 +50,17 @@ namespace HarryPotter.Game.Core.DataLayers
             }
 
 
-            System.IO.File.WriteAllText(this.ChemniEnregistrement, item.ToString());
+            System.IO.File.WriteAllText(this.CheminEnregistrement, item.ToString());
+        }
+
+        public T Lire(Type typeObjet)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
         #region Properties
-        public string ChemniEnregistrement
+        public string CheminEnregistrement
         {
             get;
             init;

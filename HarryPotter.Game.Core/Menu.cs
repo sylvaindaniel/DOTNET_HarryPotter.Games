@@ -42,5 +42,7 @@ namespace HarryPotter.Game.Core
                 afficher(item);
             }
         }
+
+        public List<ItemMenu> Items { get { return this.items; } }
     }
 }

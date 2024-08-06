@@ -9,6 +9,8 @@ namespace HarryPotter.Game.Core
     public class ItemMenu
     {
         #region Constructors
+        public ItemMenu() : this(0,string.Empty) {  }
+
         public ItemMenu(int id, string libelle)
         {
             this.Id = id;
